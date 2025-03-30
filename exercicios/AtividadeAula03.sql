@@ -66,3 +66,30 @@ UPDATE ANIMAL SET NOME = 'Terry'
 WHERE ID = 1;
 
 DELETE FROM Vacina WHERE ID = 4;
+
+-- com base, elabore consultas sql para responder:
+-- 1 - quantidade de animais registrados no sistema?
+-- 2 - qual total de vacina aplicadas registras no sistema?
+-- 3 - quantos animais temos registrados para cada categoria?
+-- 4 - qual a categoria de animais que recebeu mais vacinas?
+USE VET_PET;
+-- 1
+SELECT COUNT(*) FROM ANIMAL;
+
+-- 2
+SELECT COUNT(*) FROM VACINA;
+
+-- 3
+SELECT T.NOME AS CATEGORIA, COUNT(A.ID) AS TOTAL_ANIMAIS
+FROM TIPO_ANIMAL T
+LEFT JOIN ANIMAL A ON T.ID = A.ID_TIPO_ANIMAL
+GROUP BY T.NOME;
+
+-- 4
+SELECT T.NOME AS categoria, COUNT(V.ID) AS total_vacinas
+FROM TIPO_ANIMAL T
+LEFT JOIN ANIMAL A ON T.ID = A.ID_TIPO_ANIMAL
+LEFT JOIN VACINA V ON A.ID = V.ID_ANIMAL
+GROUP BY T.NOME
+ORDER BY total_vacinas DESC
+LIMIT 1;

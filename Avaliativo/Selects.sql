@@ -1,5 +1,4 @@
-USE SimposioDB;
-
+USE Simposio;
 -- 1. Quantas pessoas estão inscritas em cada minicurso?
 SELECT 
     m.Nome AS Nome_Minicurso,
@@ -80,21 +79,23 @@ GROUP BY p.Id, p.Nome
 ORDER BY Total_Atividades DESC;
 
 -- 8. Qual é o parecer mais recente por artigo?
-SELECT 
+SELECT
     a.Titulo AS Titulo_Artigo,
-    p.Nome AS Nome_Parecer,
-    p.Descricao AS Descricao_Parecer,
-    MAX(p.Id) AS Id_Parecer_Mais_Recente
+    MAX(p.Id) AS Id_Parecer_Mais_Recente,
+    ANY_VALUE(p.Descricao) AS Descricao_Parecer
 FROM Artigo a
-INNER JOIN Parecer p ON a.Id = p.Id_Artigo
+INNER JOIN Parecer p
+ON a.Id = p.Id_Artigo
 GROUP BY a.Id, a.Titulo
-ORDER BY Id_Parecer_Mais_Recente DESC;
+ORDER BY Id_Parecer_Mais_Recente DESC
+LIMIT 0, 1000;
 
 -- 9. Quantas pessoas estão na organização e também na comissão?
 SELECT 
     COUNT(DISTINCT o.Id_Pessoa) AS Pessoas_Organizacao_E_Comissao
-FROM Organizacao o
-INNER JOIN Comissao c ON o.Id_Pessoa = c.Id_CP
+FROM Organizacao AS o
+INNER JOIN Membro_Comissao AS mc ON o.Id_Pessoa = mc.Id_Pessoa
+INNER JOIN Comissao AS c ON mc.Id_Comissao = c.Id
 WHERE o.Id_Simposio = 1;
 
 -- 10. Qual é o número de artigos por autor e o autor com mais artigos?
@@ -105,4 +106,9 @@ SELECT
 FROM Pessoa p
 INNER JOIN Autor au ON p.Id = au.Id_Pessoa
 GROUP BY p.Id, p.Nome
-ORDER BY Total_Artigos DESC;
+ORDER BY Total_Artigos DESC;-- 9. Quantas pessoas estão na organização e também na comissão?
+SELECT 
+    COUNT(DISTINCT o.Id_Pessoa) AS Pessoas_Organizacao_E_Comissao
+FROM Organizacao o
+INNER JOIN Comissao c ON o.Id_Pessoa = c.Id_CP
+WHERE o.Id_Simposio = 1;

@@ -1,19 +1,21 @@
+USE Simposio;
+
 INSERT INTO Simposio (Nome, Data, Local, Data_Inicio, Data_Fim) 
 VALUES 
     ('Encontro de Inovação 2025', '2025-06-01', 'Instituto de Tecnologia', '2025-06-01', '2025-06-03');
 
-INSERT INTO Pessoa (Nome, Email, Instituicao) 
+INSERT INTO Pessoa (Nome, Instituicao) 
 VALUES 
-    ('Lucas Almeida', 'lucas.almeida@email.com', 'Instituto de Tecnologia'),
-    ('Fernanda Costa', 'fernanda.costa@email.com', 'Universidade Nacional'),
-    ('Ricardo Lima', 'ricardo.lima@email.com', 'Instituto de Pesquisa'),
-    ('Juliana Santos', 'juliana.santos@email.com', 'Universidade do Centro'),
-    ('Thiago Martins', 'thiago.martins@email.com', 'Faculdade de Engenharia'),
-    ('Camila Ferreira', 'camila.ferreira@email.com', 'Instituto de Tecnologia'),
-    ('André Oliveira', 'andre.oliveira@email.com', 'Universidade Nacional'),
-    ('Patrícia Rocha', 'patricia.rocha@email.com', 'Universidade do Norte'),
-    ('Felipe Mendes', 'felipe.mendes@email.com', 'Instituto de Pesquisa'),
-    ('Bianca Silva', 'bianca.silva@email.com', 'Universidade do Centro');
+    ('Lucas Almeida', 'Instituto de Tecnologia'),
+    ('Fernanda Costa', 'Universidade Nacional'),
+    ('Ricardo Lima', 'Instituto de Pesquisa'),
+    ('Juliana Santos', 'Universidade do Centro'),
+    ('Thiago Martins', 'Faculdade de Engenharia'),
+    ('Camila Ferreira', 'Instituto de Tecnologia'),
+    ('André Oliveira', 'Universidade Nacional'),
+    ('Patrícia Rocha', 'Universidade do Norte'),
+    ('Felipe Mendes', 'Instituto de Pesquisa'),
+    ('Bianca Silva', 'Universidade do Centro');
 
 INSERT INTO Organizacao (Id_Simposio, Id_Pessoa) 
 VALUES 

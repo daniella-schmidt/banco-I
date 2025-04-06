@@ -1,10 +1,9 @@
-CREATE DATABASE SimposioDB;
-USE SimposioDB;
+CREATE DATABASE Simposio;
+USE Simposio;
 
 CREATE TABLE Pessoa (
     Id INT NOT NULL AUTO_INCREMENT,
     Nome VARCHAR(255) NOT NULL,
-    Email VARCHAR(255) NOT NULL,
     Instituicao VARCHAR(255),
     PRIMARY KEY (Id)
 );

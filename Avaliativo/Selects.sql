@@ -93,22 +93,16 @@ LIMIT 0, 1000;
 -- 9. Quantas pessoas estão na organização e também na comissão?
 SELECT 
     COUNT(DISTINCT o.Id_Pessoa) AS Pessoas_Organizacao_E_Comissao
-FROM Organizacao AS o
-INNER JOIN Membro_Comissao AS mc ON o.Id_Pessoa = mc.Id_Pessoa
-INNER JOIN Comissao AS c ON mc.Id_Comissao = c.Id
+FROM Organizacao o
+INNER JOIN Membro_Comissao mc ON o.Id_Pessoa = mc.Id_Pessoa
+INNER JOIN Comissao c ON mc.Id_Comissao = c.Id
 WHERE o.Id_Simposio = 1;
 
 -- 10. Qual é o número de artigos por autor e o autor com mais artigos?
 SELECT 
     p.Nome AS Nome_Autor,
-    COUNT(au.Id_Artigo) AS Total_Artigos,
-    MAX(COUNT(au.Id_Artigo)) OVER () AS Maior_Numero_Artigos
+    COUNT(au.Id_Artigo) AS Total_Artigos
 FROM Pessoa p
 INNER JOIN Autor au ON p.Id = au.Id_Pessoa
 GROUP BY p.Id, p.Nome
-ORDER BY Total_Artigos DESC;-- 9. Quantas pessoas estão na organização e também na comissão?
-SELECT 
-    COUNT(DISTINCT o.Id_Pessoa) AS Pessoas_Organizacao_E_Comissao
-FROM Organizacao o
-INNER JOIN Comissao c ON o.Id_Pessoa = c.Id_CP
-WHERE o.Id_Simposio = 1;
+ORDER BY Total_Artigos DESC;

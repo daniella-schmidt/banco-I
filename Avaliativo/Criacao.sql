@@ -1,6 +1,5 @@
 CREATE DATABASE Simposio;
 USE Simposio;
-
 CREATE TABLE Pessoa (
     Id INT NOT NULL AUTO_INCREMENT,
     Nome VARCHAR(255) NOT NULL,
@@ -104,22 +103,12 @@ CREATE TABLE Palestra (
     FOREIGN KEY (Id_Simposio) REFERENCES Simposio(Id)
 );
 
-CREATE TABLE Inscricao (
-    Id INT NOT NULL AUTO_INCREMENT,
-    Id_Simposio INT NOT NULL,
-    Id_Pessoa INT NOT NULL,
-    Data_Inscricao DATE NOT NULL,
-    PRIMARY KEY (Id),
-    FOREIGN KEY (Id_Simposio) REFERENCES Simposio(Id),
-    FOREIGN KEY (Id_Pessoa) REFERENCES Pessoa(Id)
-);
-
 CREATE TABLE Inscricao_Minicurso (
     Id INT NOT NULL AUTO_INCREMENT,
     Id_Inscricao INT NOT NULL,
     Id_Minicurso INT NOT NULL,
+    Data_Inscricao DATE NOT NULL,
     PRIMARY KEY (Id),
-    FOREIGN KEY (Id_Inscricao) REFERENCES Inscricao(Id),
     FOREIGN KEY (Id_Minicurso) REFERENCES Minicurso(Id)
 );
 
@@ -127,8 +116,8 @@ CREATE TABLE Inscricao_Palestra (
     Id INT NOT NULL AUTO_INCREMENT,
     Id_Inscricao INT NOT NULL,
     Id_Palestra INT NOT NULL,
+    Data_Inscricao DATE NOT NULL,
     PRIMARY KEY (Id),
-    FOREIGN KEY (Id_Inscricao) REFERENCES Inscricao(Id),
     FOREIGN KEY (Id_Palestra) REFERENCES Palestra(Id)
 );
 

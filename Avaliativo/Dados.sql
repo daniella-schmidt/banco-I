@@ -102,39 +102,26 @@ VALUES
     ('Palestra sobre Realidade Aumentada e Virtual', 2, 1, '2025-06-03', '17:00:00'),
     ('Palestra sobre Sistemas de Informação', 5, 1, '2025-06-01', '12:00:00');
 
-INSERT INTO Inscricao (Id_Simposio, Id_Pessoa, Data_Inscricao) 
+INSERT INTO Inscricao_Minicurso (Id_Inscricao, Id_Minicurso, Data_Inscricao)  
 VALUES 
-    (1, 1, '2025-05-01'), 
-    (1, 2, '2025-05-02'), 
-    (1, 3, '2025-05-03'),
-    (1, 4, '2025-05-04'), 
-    (1, 5, '2025-05-05'), 
-    (1, 6, '2025-05-06'),
-    (1, 7, '2025-05-07'), 
-    (1, 8, '2025-05-08'), 
-    (1, 9, '2025-05-09'),
-    (1, 10, '2025-05-10');
-
-INSERT INTO Inscricao_Minicurso (Id_Inscricao, Id_Minicurso) 
-VALUES 
-    (1, 1), (1, 3), (1, 5),  -- 3 minicursos
-    (2, 2),                   -- 1 minicurso
-    (3, 1), (3, 4), (3, 6), (3, 8), -- 4 minicursos
-    (5, 7), (5, 9),           -- 2 minicursos
-    (6, 10),                  -- 1 minicurso
-    (7, 2), (7, 3),           -- 2 minicursos
-    (8, 4),                   -- 1 minicurso
-    (9, 5)                    -- 1 minicurso
+    (1, 1, '2025-04-01'), (1, 3, '2025-04-01'), (1, 5, '2025-04-01'),   -- 3 minicursos
+    (2, 2, '2025-04-02'),                                              -- 1 minicurso
+    (3, 1, '2025-04-03'), (3, 4, '2025-04-03'), (3, 6, '2025-04-03'), (3, 8, '2025-04-03'), -- 4 minicursos
+    (5, 7, '2025-04-05'), (5, 9, '2025-04-05'),                        -- 2 minicursos
+    (6, 10, '2025-04-06'),                                             -- 1 minicurso
+    (7, 2, '2025-04-07'), (7, 3, '2025-04-07'),                        -- 2 minicursos
+    (8, 4, '2025-04-08'),                                              -- 1 minicurso
+    (9, 5, '2025-04-09')                                               -- 1 minicurso
 ; -- 15 registros
 
-INSERT INTO Inscricao_Palestra (Id_Inscricao, Id_Palestra) 
+INSERT INTO Inscricao_Palestra (Id_Inscricao, Id_Palestra, Data_Inscricao) 
 VALUES 
-    (1, 1), (1, 3),           -- 2 palestras
-    (2, 2), (2, 4), (2, 6),   -- 3 palestras
-    (3, 5),                   -- 1 palestra
-    (4, 1), (4, 7), (4, 8), (4, 9), -- 4 palestras
-    (6, 3), (6, 10),          -- 2 palestras
-    (7, 2),                   -- 1 palestra
-    (8, 4),                   -- 1 palestra
-    (9, 6)                    -- 1 palestra
+    (1, 1, '2025-04-01'), (1, 3, '2025-04-01'),           -- 2 palestras
+    (2, 2, '2025-04-02'), (2, 4, '2025-04-02'), (2, 6, '2025-04-02'),   -- 3 palestras
+    (3, 5, '2025-04-03'),                               -- 1 palestra
+    (4, 1, '2025-04-04'), (4, 7, '2025-04-04'), (4, 8, '2025-04-04'), (4, 9, '2025-04-04'), -- 4 palestras
+    (6, 3, '2025-04-06'), (6, 10, '2025-04-06'),          -- 2 palestras
+    (7, 2, '2025-04-07'),                               -- 1 palestra
+    (8, 4, '2025-04-08'),                               -- 1 palestra
+    (9, 6, '2025-04-09')                                -- 1 palestra
 ; -- 15 registros

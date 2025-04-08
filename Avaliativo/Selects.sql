@@ -21,14 +21,12 @@ HAVING Total_Artigos_Aprovados > 0
 ORDER BY Total_Artigos_Aprovados DESC;
 
 -- 3. Número total de inscrições no simpósio e número de pessoas que se inscreveram em minicursos e palestras
-SELECT 
-    COUNT(i.Id) AS Total_Inscricoes_Simposio,
+SELECT
     COUNT(DISTINCT im.Id_Inscricao) AS Inscricoes_Minicursos,
     COUNT(DISTINCT ip.Id_Inscricao) AS Inscricoes_Palestras
-FROM Inscricao i
-LEFT JOIN Inscricao_Minicurso im ON i.Id = im.Id_Inscricao
-LEFT JOIN Inscricao_Palestra ip ON i.Id = ip.Id_Inscricao
-WHERE i.Id_Simposio = 1;
+FROM Inscricao_Minicurso im
+LEFT JOIN Inscricao_Palestra ip ON im.Id_Inscricao = ip.Id_Inscricao
+WHERE im.Id_Inscricao IS NOT NULL;
 
 -- 4. Quem são os ministrantes com mais minicursos e palestras combinados?
 SELECT 
@@ -66,17 +64,17 @@ GROUP BY t.Id, t.Nome
 ORDER BY Total_Artigos DESC;
 
 -- 7. Quais pessoas estão inscritas em mais minicursos e palestras combinados?
-SELECT 
+SELECT
     p.Nome AS Nome_Pessoa,
     COUNT(DISTINCT im.Id_Minicurso) AS Total_Minicursos,
     COUNT(DISTINCT ip.Id_Palestra) AS Total_Palestras,
     (COUNT(DISTINCT im.Id_Minicurso) + COUNT(DISTINCT ip.Id_Palestra)) AS Total_Atividades
 FROM Pessoa p
-INNER JOIN Inscricao i ON p.Id = i.Id_Pessoa
-LEFT JOIN Inscricao_Minicurso im ON i.Id = im.Id_Inscricao
-LEFT JOIN Inscricao_Palestra ip ON i.Id = ip.Id_Inscricao
+LEFT JOIN Inscricao_Minicurso im ON p.Id = im.Id_Inscricao
+LEFT JOIN Inscricao_Palestra ip ON p.Id = ip.Id_Inscricao
 GROUP BY p.Id, p.Nome
-ORDER BY Total_Atividades DESC;
+ORDER BY Total_Atividades DESC
+LIMIT 0, 1000;
 
 -- 8. Qual é o parecer mais recente por artigo?
 SELECT

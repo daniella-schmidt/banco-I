@@ -109,6 +109,7 @@ CREATE TABLE Inscricao_Minicurso (
     Id_Minicurso INT NOT NULL,
     Data_Inscricao DATE NOT NULL,
     PRIMARY KEY (Id),
+    FOREIGN KEY (Id_Inscricao) REFERENCES Pessoa(Id),
     FOREIGN KEY (Id_Minicurso) REFERENCES Minicurso(Id)
 );
 
@@ -118,8 +119,49 @@ CREATE TABLE Inscricao_Palestra (
     Id_Palestra INT NOT NULL,
     Data_Inscricao DATE NOT NULL,
     PRIMARY KEY (Id),
+    FOREIGN KEY (Id_Inscricao) REFERENCES Pessoa(Id),
     FOREIGN KEY (Id_Palestra) REFERENCES Palestra(Id)
 );
+
+DELIMITER //
+CREATE TRIGGER trg_prevent_ministrante_palestra
+BEFORE INSERT ON Inscricao_Palestra
+FOR EACH ROW
+BEGIN
+    DECLARE ministrante_id INT;
+
+    -- Buscar o ID do ministrante do minicurso
+    SELECT Id_Ministrante INTO ministrante_id
+    FROM Palestra
+    WHERE Id = NEW.Id_Palestra;
+
+    -- Comparar com o ID da pessoa se inscrevendo
+    IF NEW.Id_Inscricao = ministrante_id THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'O ministrante não pode se inscrever na própria palestra.';
+    END IF;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER trg_prevent_ministrante_minicurso
+BEFORE INSERT ON Inscricao_Minicurso
+FOR EACH ROW
+BEGIN
+    DECLARE ministrante_id INT;
+
+    -- Buscar o ID do ministrante do minicurso
+    SELECT Id_Ministrante INTO ministrante_id
+    FROM Minicurso
+    WHERE Id = NEW.Id_Minicurso;
+
+    -- Comparar com o ID da pessoa se inscrevendo
+    IF NEW.Id_Inscricao = ministrante_id THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'O ministrante não pode se inscrever no próprio minicurso.';
+    END IF;
+END//
+DELIMITER ;
 
 DELIMITER //
 CREATE TRIGGER before_insert_parecer

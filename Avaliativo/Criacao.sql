@@ -125,21 +125,13 @@ CREATE TABLE Inscricao_Palestra (
 );
 
 DELIMITER //
-<<<<<<< HEAD
 CREATE TRIGGER prevencao_ministrante_palestra
-=======
-CREATE TRIGGER trg_prevent_ministrante_palestra
->>>>>>> 5476b47d6aeeffcd95e52e68fa195cd682ff0012
 BEFORE INSERT ON Inscricao_Palestra
 FOR EACH ROW
 BEGIN
     DECLARE ministrante_id INT;
 
-<<<<<<< HEAD
     -- Buscar o ID do ministrante do palestra
-=======
-    -- Buscar o ID do ministrante do minicurso
->>>>>>> 5476b47d6aeeffcd95e52e68fa195cd682ff0012
     SELECT Id_Ministrante INTO ministrante_id
     FROM Palestra
     WHERE Id = NEW.Id_Palestra;
@@ -153,11 +145,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
-<<<<<<< HEAD
 CREATE TRIGGER prevencao_ministrante_minicurso
-=======
-CREATE TRIGGER trg_prevent_ministrante_minicurso
->>>>>>> 5476b47d6aeeffcd95e52e68fa195cd682ff0012
 BEFORE INSERT ON Inscricao_Minicurso
 FOR EACH ROW
 BEGIN
@@ -177,11 +165,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
-<<<<<<< HEAD
 CREATE TRIGGER antes_parecer
-=======
-CREATE TRIGGER before_insert_parecer
->>>>>>> 5476b47d6aeeffcd95e52e68fa195cd682ff0012
 BEFORE INSERT ON Parecer
 FOR EACH ROW
 BEGIN

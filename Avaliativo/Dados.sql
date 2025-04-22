@@ -131,8 +131,4 @@ VALUES
 
 INSERT INTO Inscricao_Palestra (Id_Inscricao, Id_Palestra, Data_Inscricao) 
 VALUES 
-<<<<<<< HEAD
     (2, 1, '2025-04-01'); 
-=======
-    (2, 1, '2025-04-01'); -- Supondo que a pessoa com Id 2 é o ministrante da palestra com Id 1
->>>>>>> 5476b47d6aeeffcd95e52e68fa195cd682ff0012

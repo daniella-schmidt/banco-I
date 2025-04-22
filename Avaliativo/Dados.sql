@@ -58,11 +58,13 @@ VALUES
     ('IoT em Ambientes Urbanos', 9, '2025-04-09'),
     ('Modelos de Design de Software', 10, '2025-04-10');
 
+-- Inserindo dados na tabela Autor
 INSERT INTO Autor (Id_Pessoa, Id_Artigo) 
 VALUES 
     (3, 1), (6, 1), (3, 2), (9, 3), (6, 4),
     (3, 5), (9, 6), (6, 7), (3, 8), (9, 9);
 
+-- Inserindo dados na tabela Parecer
 INSERT INTO Parecer (Id_Artigo, Id_Comissao, Status, Descricao, Data_Emissao) 
 VALUES 
     (1, 1, 'Aprovado com modificações', 'Aprovado com modificações', '2025-04-15'),
@@ -76,6 +78,7 @@ VALUES
     (9, 9, 'Rejeitado', 'Rejeitado', '2025-04-23'),
     (10, 10, 'Aprovado', 'Aprovado', '2025-04-24');
 
+-- Inserindo dados na tabela Minicurso
 INSERT INTO Minicurso (Nome, Id_Simposio, Id_Ministrante, Data, Horario) 
 VALUES 
     ('Workshop de SQL', 1, 2, '2025-06-01', '09:00:00'),
@@ -125,3 +128,7 @@ VALUES
     (8, 4, '2025-04-08'),                               -- 1 palestra
     (9, 6, '2025-04-09')                                -- 1 palestra
 ; -- 15 registros
+
+INSERT INTO Inscricao_Palestra (Id_Inscricao, Id_Palestra, Data_Inscricao) 
+VALUES 
+    (2, 1, '2025-04-01'); 

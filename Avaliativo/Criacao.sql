@@ -1,5 +1,6 @@
 CREATE DATABASE Simposio;
 USE Simposio;
+
 CREATE TABLE Pessoa (
     Id INT NOT NULL AUTO_INCREMENT,
     Nome VARCHAR(255) NOT NULL,
@@ -71,7 +72,7 @@ CREATE TABLE Parecer (
     Id INT NOT NULL AUTO_INCREMENT,
     Id_Artigo INT NOT NULL,
     Id_Comissao INT NOT NULL,
-    Status VARCHAR(50) NOT NULL, -- Ex.: 'Aprovado', 'Rejeitado', 'Aprovado com ajustes'
+    Status VARCHAR(50) NOT NULL, 
     Descricao VARCHAR(255) NOT NULL,
     Data_Emissao DATE NOT NULL,
     PRIMARY KEY (Id),
@@ -109,6 +110,7 @@ CREATE TABLE Inscricao_Minicurso (
     Id_Minicurso INT NOT NULL,
     Data_Inscricao DATE NOT NULL,
     PRIMARY KEY (Id),
+    FOREIGN KEY (Id_Inscricao) REFERENCES Pessoa(Id),
     FOREIGN KEY (Id_Minicurso) REFERENCES Minicurso(Id)
 );
 
@@ -118,11 +120,52 @@ CREATE TABLE Inscricao_Palestra (
     Id_Palestra INT NOT NULL,
     Data_Inscricao DATE NOT NULL,
     PRIMARY KEY (Id),
+    FOREIGN KEY (Id_Inscricao) REFERENCES Pessoa(Id),
     FOREIGN KEY (Id_Palestra) REFERENCES Palestra(Id)
 );
 
 DELIMITER //
-CREATE TRIGGER before_insert_parecer
+CREATE TRIGGER prevencao_ministrante_palestra
+BEFORE INSERT ON Inscricao_Palestra
+FOR EACH ROW
+BEGIN
+    DECLARE ministrante_id INT;
+
+    -- Buscar o ID do ministrante do palestra
+    SELECT Id_Ministrante INTO ministrante_id
+    FROM Palestra
+    WHERE Id = NEW.Id_Palestra;
+
+    -- Comparar com o ID da pessoa se inscrevendo
+    IF NEW.Id_Inscricao = ministrante_id THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'O ministrante não pode se inscrever na própria palestra.';
+    END IF;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER prevencao_ministrante_minicurso
+BEFORE INSERT ON Inscricao_Minicurso
+FOR EACH ROW
+BEGIN
+    DECLARE ministrante_id INT;
+
+    -- Buscar o ID do ministrante do minicurso
+    SELECT Id_Ministrante INTO ministrante_id
+    FROM Minicurso
+    WHERE Id = NEW.Id_Minicurso;
+
+    -- Comparar com o ID da pessoa se inscrevendo
+    IF NEW.Id_Inscricao = ministrante_id THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'O ministrante não pode se inscrever no próprio minicurso.';
+    END IF;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER antes_parecer
 BEFORE INSERT ON Parecer
 FOR EACH ROW
 BEGIN

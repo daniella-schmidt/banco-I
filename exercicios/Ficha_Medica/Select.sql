@@ -1,18 +1,18 @@
 use ficha_medica;
 
--- Liste o nome, CPF e data de nascimento de todos os pacientes solteiros, ordenados por nome.
+-- nome, CPF e data de nascimento de todos os pacientes solteiros, ordenados por nome.
 SELECT nome, cpf, data_nascimento 
 FROM Paciente 
 WHERE id_estado_civil = 1 
 ORDER BY nome;
 
--- "Mostre o nome do paciente, tipo de convênio e telefone para pacientes atendidos pelo convênio 'Unimed' ou 'Amil'."
+-- Mostre o nome do paciente, tipo de convênio e telefone para pacientes atendidos pelo convênio 'Unimed' ou 'Amil'.
 SELECT p.nome, t.tipo AS convenio, p.telefone 
 FROM Paciente p
 JOIN Tipo_Convenio t ON p.id_convenio = t.id
 WHERE t.tipo IN ('Unimed', 'Amil');
 
--- Liste todas as consultas com: nome do paciente, nome do médico, especialidade, data da consulta e diagnóstico, para consultas de janeiro de 2023.
+-- todas as consultas com: nome do paciente, nome do médico, especialidade, data da consulta e diagnóstico, para consultas de janeiro de 2023.
 SELECT p.nome AS paciente, m.nome AS medico, m.especialidade, c.data, c.diagnostico 
 FROM Consultas c
 JOIN Paciente p ON c.id_paciente = p.nmr_paciente
@@ -27,7 +27,7 @@ JOIN Exame e ON c.nmr_consulta = e.nrm_consulta
 GROUP BY m.crm, m.nome
 ORDER BY total_exames DESC;
 
--- "Liste pacientes que realizaram exame de 'Ressonância Magnética' ou 'Tomografia Computadorizada', mostrando nome do paciente e data do exame."
+-- pacientes que realizaram exame de 'Ressonância Magnética' ou 'Tomografia Computadorizada', mostrando nome do paciente e data do exame.
 SELECT p.nome, e.data
 FROM Exame e
 JOIN Consultas c ON e.nrm_consulta = c.nmr_consulta
@@ -42,12 +42,12 @@ SELECT p.nome, e.logradouro, e.numero, e.bairro, e.cidade, e.estado
 FROM Paciente p
 LEFT JOIN Enderecos e ON p.id_endereco_atual = e.id;
 
--- Liste pacientes com mais de 50 anos na data de hoje (08/06/2025), mostrando nome e idade calculada
+-- pacientes com mais de 50 anos na data de hoje (08/06/2025), mostrando nome e idade calculada
 SELECT nome, TIMESTAMPDIFF(YEAR, data_nascimento, '2025-06-08') AS idade
 FROM Paciente
 WHERE TIMESTAMPDIFF(YEAR, data_nascimento, '2025-06-08') > 50;
 
--- Liste todos os exames realizados pelo paciente 'João da Silva', mostrando tipo do exame, data do exame e nome do médico que solicitou.
+-- todos os exames realizados pelo paciente 'João da Silva', mostrando tipo do exame, data do exame e nome do médico que solicitou.
 SELECT te.nome AS tipo_exame, e.data, m.nome AS medico
 FROM Exame e
 JOIN Consultas c ON e.nrm_consulta = c.nmr_consulta

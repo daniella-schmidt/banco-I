@@ -141,3 +141,9 @@ CALL criar_reserva(1, 7, 16, 'Econômica', 380.00, @codigo12, @msg12);
 CALL criar_reserva(3, 4, 27, 'Econômica', 450.00, @codigo13, @msg13);
 CALL criar_reserva(3, 6, 28, 'Econômica', 420.00, @codigo14, @msg14);
 CALL criar_reserva(7, 8, 29, 'Econômica', 500.00, @codigo15, @msg15);
+
+CALL relatorio_ocupacao_voo(8);
+CALL relatorio_ocupacao_voo(2);
+
+-- IDs
+CALL relatorio_ocupacao_voo(5);

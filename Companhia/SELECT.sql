@@ -1,3 +1,5 @@
+use aereo_nuvem;
+
 -- Listar todos os clientes com seus status
 SELECT 
     c.Nome as Cliente,
@@ -63,14 +65,6 @@ SELECT
     Desconto_Sugerido
 FROM v_clientes_vip
 ORDER BY Total_Viagens DESC;
-
-
--- Relatório de ocupação do voo 1
-CALL relatorio_ocupacao_voo(1);
-
--- Relatório de ocupação do voo 3
-CALL relatorio_ocupacao_voo(3);
-
 
 -- Ranking de aeroportos mais movimentados
 SELECT 
@@ -138,44 +132,3 @@ LEFT JOIN Reserva r ON v.Id = r.fk_voo
 GROUP BY v.Id, v.Numero, ao.Cidade, ad.Cidade
 HAVING COUNT(r.Id) > 0
 ORDER BY Receita_Total DESC;
-
-
--- Teste da função de duração
-SELECT 
-    'Teste Duração de Voo' as Teste,
-    calcular_duracao_voo('2025-07-15 08:00:00', '2025-07-15 09:30:00') as Duracao_Horas;
-
--- Teste da função de idade
-SELECT 
-    'Teste Cálculo de Idade' as Teste,
-    calcular_idade('1990-05-15') as Idade_Anos;
-
--- Teste da função de desconto
-SELECT 
-    'Teste Aplicação de Desconto' as Teste,
-    aplicar_desconto(1000.00, 3) as Preco_Com_Desconto; -- Cliente com status Ouro
-
--- Verificar se os códigos de reserva foram gerados automaticamente
-SELECT 
-    'Códigos de Reserva Gerados' as Info,
-    Codigo_reserva,
-    fk_cliente,
-    fk_voo,
-    fk_poltrona,
-    Preco
-FROM Reserva
-ORDER BY Id;
-
--- Verificar disponibilidade de poltronas (poltronas sem reserva estão disponíveis)
-SELECT 
-    p.Numero as Poltrona,
-    v.Numero as Voo,
-    CASE 
-        WHEN r.Id IS NOT NULL THEN 'Reservado'
-        ELSE 'Disponível'
-    END as Status
-FROM Poltrona p
-CROSS JOIN Voo v
-LEFT JOIN Reserva r ON p.Id = r.fk_poltrona AND v.Id = r.fk_voo
-WHERE p.fk_aeronave = v.fk_aeronave
-ORDER BY v.Numero, p.Numero;

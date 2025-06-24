@@ -15,6 +15,10 @@ BEGIN
 END //
 DELIMITER ;
 
+SELECT 
+    'Teste Duração de Voo' as Teste,
+    calcular_duracao_voo('2025-07-15 08:00:00', '2025-07-15 09:30:00') as Duracao_Horas;
+
 -- Função para calcular idade (necessária para a view)
 DELIMITER //
 CREATE FUNCTION calcular_idade(data_nascimento DATE) 
@@ -25,6 +29,10 @@ BEGIN
     RETURN TIMESTAMPDIFF(YEAR, data_nascimento, CURDATE());
 END //
 DELIMITER ;
+
+SELECT 
+    'Teste Cálculo de Idade' as Teste,
+    calcular_idade('1990-05-15') as Idade_Anos;
 
 -- Função para aplicar desconto baseado no tipo de cliente
 DELIMITER //
@@ -43,6 +51,10 @@ BEGIN
     RETURN preco_original * (1 - desconto/100);
 END //
 DELIMITER ;
+
+SELECT 
+    'Teste Aplicação de Desconto' as Teste,
+    aplicar_desconto(1000.00, 3) as Preco_Com_Desconto; -- Cliente com status 
 
 -- Função para verificar disponibilidade de poltrona (simplificada)
 DELIMITER //
@@ -177,6 +189,9 @@ BEGIN
 END //
 DELIMITER ;
 
+CALL relatorio_ocupacao_voo(1);
+CALL relatorio_ocupacao_voo(3);
+
 -- Procedimento para listar poltronas disponíveis em um voo
 DELIMITER //
 CREATE PROCEDURE listar_poltronas_disponiveis(IN p_voo_id INT)
@@ -200,6 +215,19 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Verificar disponibilidade de poltronas 
+SELECT 
+    p.Numero as Poltrona,
+    v.Numero as Voo,
+    CASE 
+        WHEN r.Id IS NOT NULL THEN 'Reservado'
+        ELSE 'Disponível'
+    END as Status
+FROM Poltrona p
+CROSS JOIN Voo v
+LEFT JOIN Reserva r ON p.Id = r.fk_poltrona AND v.Id = r.fk_voo
+WHERE p.fk_aeronave = v.fk_aeronave
+ORDER BY v.Numero, p.Numero;
 -- =============================================
 -- TRIGGERS
 -- =============================================
@@ -215,6 +243,17 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+
+-- Verificar se os códigos de reserva foram gerados automaticamente
+SELECT 
+    'Códigos de Reserva Gerados' as Info,
+    Codigo_reserva,
+    fk_cliente,
+    fk_voo,
+    fk_poltrona,
+    Preco
+FROM Reserva
+ORDER BY Id;
 
 -- Trigger para validar data de voo (não pode ser no passado)
 DELIMITER //

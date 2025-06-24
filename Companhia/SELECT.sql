@@ -26,46 +26,6 @@ JOIN Aeroporto ad ON v.Aeroporto_destino = ad.Codigo
 JOIN Aeronave a ON v.fk_aeronave = a.Id
 ORDER BY v.Partida_prog;
 
-
--- View de reservas detalhadas
-SELECT 
-    Codigo_reserva,
-    Cliente_Nome,
-    Cliente_Status,
-    Voo_Numero,
-    Aeroporto_Origem,
-    Aeroporto_Destino,
-    Poltrona_Numero,
-    Poltrona_Classe,
-    Preco_Pago,
-    Duracao_Horas
-FROM v_reservas_detalhadas
-ORDER BY Data_reserva DESC;
-
--- View de voos completos
-SELECT 
-    Voo_Numero,
-    Cidade_Origem,
-    Cidade_Destino,
-    Partida_Programada,
-    Aeronave_Tipo,
-    Capacidade_Total,
-    Reservas_Confirmadas,
-    Percentual_Ocupacao
-FROM v_voos_completos
-ORDER BY Percentual_Ocupacao DESC;
-
--- View de clientes VIP
-SELECT 
-    Cliente_Nome,
-    Status_Atual,
-    Total_Viagens,
-    Total_Gasto,
-    Categoria_VIP,
-    Desconto_Sugerido
-FROM v_clientes_vip
-ORDER BY Total_Viagens DESC;
-
 -- Ranking de aeroportos mais movimentados
 SELECT 
     a.Nome as Aeroporto,

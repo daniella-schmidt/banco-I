@@ -81,7 +81,7 @@ DELIMITER ;
 -- PROCEDIMENTOS ARMAZENADOS
 -- =============================================
 
--- Procedimento para criar uma nova reserva (adaptado)
+-- Procedimento para criar uma nova reserva
 DELIMITER //
 CREATE PROCEDURE criar_reserva(
     IN p_cliente_id INT,
@@ -130,7 +130,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- Procedimento para cancelar reserva (simplificado)
+-- Procedimento para cancelar reserva
 DELIMITER //
 CREATE PROCEDURE cancelar_reserva(
     IN p_codigo_reserva VARCHAR(10),
@@ -215,19 +215,8 @@ BEGIN
 END //
 DELIMITER ;
 
--- Verificar disponibilidade de poltronas 
-SELECT 
-    p.Numero as Poltrona,
-    v.Numero as Voo,
-    CASE 
-        WHEN r.Id IS NOT NULL THEN 'Reservado'
-        ELSE 'Disponível'
-    END as Status
-FROM Poltrona p
-CROSS JOIN Voo v
-LEFT JOIN Reserva r ON p.Id = r.fk_poltrona AND v.Id = r.fk_voo
-WHERE p.fk_aeronave = v.fk_aeronave
-ORDER BY v.Numero, p.Numero;
+CALL listar_poltronas_disponiveis(3);
+
 -- =============================================
 -- TRIGGERS
 -- =============================================
@@ -346,6 +335,11 @@ DELIMITER ;
 -- =============================================
 -- VIEWS
 -- =============================================
+
+SELECT * FROM aereo_nuvem.v_clientes_vip;
+SELECT * FROM aereo_nuvem.v_ocupacao_por_rota;
+SELECT * FROM aereo_nuvem.v_reservas_detalhadas;
+SELECT * FROM aereo_nuvem.v_voos_completos;
 
 -- View para reservas detalhadas
 CREATE VIEW v_reservas_detalhadas AS
